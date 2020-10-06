@@ -10,7 +10,7 @@ from aioconsole import ainput
 from joycontrol import logging_default as log, utils
 from joycontrol.command_line_interface import ControllerCLI
 from joycontrol.controller import Controller
-from joycontrol.controller_state import ControllerState, button_push, button_press, button_release
+from joycontrol.controller_state import ControllerState, button_push, button_press, button_release #StickState
 from joycontrol.memory import FlashMemory
 from joycontrol.protocol import controller_protocol_factory
 from joycontrol.server import create_hid_server
@@ -52,6 +52,12 @@ Options:
     --nfc <nfc_data_file>                   Sets the nfc data of the controller to a given nfc dump upon initial
                                             connection.
 """
+
+
+# NEW Tree picking script
+async def pick_trees(controller_state):
+    tree_pick_final_list = []
+    return tree_pick_final_list
 
 
 async def test_controller_buttons(controller_state: ControllerState):
@@ -171,6 +177,16 @@ def _register_commands_with_controller_state(controller_state, cli):
     :param cli:
     :param controller_state:
     """
+
+    # Tree Picking Command
+    async def call_pick_trees():
+        """
+        pick trees - Automatically picks trees.
+        """
+        await pick_trees(controller_state)
+
+    cli.add_command('pick trees', call_pick_trees)
+        
     async def test_buttons():
         """
         test_buttons - Navigates to the "Test Controller Buttons" menu and presses all buttons.

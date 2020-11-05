@@ -10,10 +10,12 @@ from aioconsole import ainput
 from joycontrol import logging_default as log, utils
 from joycontrol.command_line_interface import ControllerCLI
 from joycontrol.controller import Controller
-from joycontrol.controller_state import ControllerState, button_push, button_press, button_release #StickState
+from joycontrol.controller_state import ControllerState, button_push, push_and_wait, l_stick_push, button_press, button_release
 from joycontrol.memory import FlashMemory
 from joycontrol.protocol import controller_protocol_factory
 from joycontrol.server import create_hid_server
+
+from scripts.tree_pick_logic import TreePickLogic
 
 logger = logging.getLogger(__name__)
 
@@ -54,11 +56,16 @@ Options:
 """
 
 
-# NEW Tree picking script
+# Enter Tree Picking Data Here
 async def pick_trees(controller_state):
-    tree_pick_final_list = []
-    return tree_pick_final_list
 
+    # enter your tree grid data here
+    tree_pick_data = TreePickLogic(tree_grid_x = 14, tree_grid_y = 24, nook_grid = [-4, 1], inv_free_space = 34, inventory_total_space = 40)
+    # change secondary defaults if necessary
+    tree_pick_data.secondary_defaults()
+
+    # run tree pick loop
+    await tree_pick_data.tree_pick_loop(controller_state)
 
 async def test_controller_buttons(controller_state: ControllerState):
     """
@@ -181,11 +188,11 @@ def _register_commands_with_controller_state(controller_state, cli):
     # Tree Picking Command
     async def call_pick_trees():
         """
-        pick trees - Automatically picks trees.
+        pick_trees - Automatically picks trees.
         """
         await pick_trees(controller_state)
 
-    cli.add_command('pick trees', call_pick_trees)
+    cli.add_command('pick_trees', call_pick_trees)
         
     async def test_buttons():
         """

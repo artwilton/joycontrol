@@ -225,7 +225,7 @@ async def button_release(controller_state, *buttons):
     await controller_state.send()
 
 
-async def button_push(controller_state, *buttons, sec=0.1):
+async def button_push(controller_state, *buttons, sec = 0.1):
     """
     Shortly push the given buttons. Wait until the controller state is send.
     :param controller_state:
@@ -235,6 +235,63 @@ async def button_push(controller_state, *buttons, sec=0.1):
     await button_press(controller_state, *buttons)
     await asyncio.sleep(sec)
     await button_release(controller_state, *buttons)
+
+
+async def push_and_wait(controller_state, *args):
+
+        def number_check(i):
+            try: 
+                int(i)
+                return True
+            except ValueError:
+                return False        
+
+        #iterate through args, check if one is string followed by a number
+        #if so, that number is the amount to wait until pressing the next button, else wait for 0.5
+
+        iter_args = iter(args)
+
+        for arg in iter_args:
+            next_arg = next(iter_args, 'stop')
+            if number_check(next_arg):
+                await button_push(controller_state, arg)
+                await asyncio.sleep(next_arg)
+            elif next_arg != 'stop':
+                await button_push(controller_state, arg)
+                await asyncio.sleep(0.5)
+                await button_push(controller_state, next_arg)
+                await asyncio.sleep(0.5)
+            else:
+                await button_push(controller_state, arg)
+                await asyncio.sleep(0.5)
+
+
+async def l_stick_push(controller_state, direction, sec = 0.1):
+    """
+    Shortly push the given stick. Wait until the controller state is send.
+    :param controller_state:
+    :param direction: Direction to move as a string. Needs to be one of the following: 'up','down','left','right', 'center'
+    :param sec: Seconds to wait before releasing the button, default: 0.1
+    """
+
+    # if not direction:
+    #     raise ValueError('No direction was given.')
+
+    if direction == 'down':
+        controller_state.l_stick_state.set_down()
+    elif direction == 'up':
+        controller_state.l_stick_state.set_up()
+    elif direction == 'left':
+        controller_state.l_stick_state.set_left()
+    elif direction == 'right':
+        controller_state.l_stick_state.set_right()
+    elif direction == 'center':
+        controller_state.l_stick_state.set_center()
+    else:
+        print("Directions must be one of the following: 'up','down','left','right', 'center'")
+
+    await asyncio.sleep(sec)
+    controller_state.l_stick_state.set_center()
 
 
 class _StickCalibration:

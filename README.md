@@ -1,3 +1,60 @@
+# Pick Trees In ACNH With Python
+*~ Tom Nook will hate you because of this one weird trick! ~*
+
+This is a modification of the amazing [joycontrol](https://github.com/mart1nro/joycontrol) library created by [mart1nro](https://github.com/mart1nro/) that allows you to automatically pick fruit from trees in Animal Crossing New Horizons, and sell the fruit at Nook's Cranny.
+
+Joycontrol is a python based toolset that emulates a Nintendo Switch control over Bluetooth, and I've included the full joycontrol README below. Once you get joycontrol working, you can run ***pick_trees*** as a joycontrol command.
+
+# Instructions
+
+Before running joycontrol, you will need to input some information about your tree grid and where Nook's Cranny is located in your town. In a future release this information will be entered into a command line prompt when running joycontrol, but for the current release you must edit the **run_controller_cli.py** file.
+
+On line 63 of **run_controller_cli.py** you will find **tree_pick_data** being defined as an instance of the *TreePickLogic* class. It is populated with sample data that you will have to change. There are also secondary defaults that are defined, which can be updated as necessary. I've included an explanation of each item you will have change below.
+
+(README STILL IN PROGRESS AS OF 11/05/2020)
+
+
+## Default Instance Variables To Edit:
+
+***tree_grid_x*** - amount of trees x direction
+
+***tree_grid_y*** - amount of trees in y direction
+
+***nook_grid*** - position in [x,y] to travel to first before entering Nook's.
+
+**nook_grid** needs to be exactly 2 spaces below where the actual building is. It is designed this way to avoid running into building by accident.
+
+***inv_free_space*** - free space in your inventory before running 'pick trees'
+
+***inventory_total_space*** - total inventory space, defaults to fully upgraded amount of 40
+
+## Secondary Defaults To Edit If Necessary:
+
+***move_speed*** - amount of time to *'await asyncio.sleep'* in order to move one grid space
+
+***move_speed_default = move_speed*** - sets default move speed to allow for slightly changing move_speed later when travelling long distances
+
+***trees_picked_total*** - total number of trees picked
+
+***trees_picked_current_row*** - number of trees picked so far in the current row
+
+***tree_rows_picked*** - total number of tree rows that have been picked
+
+***current_grid_position*** - current grid position in [x,y], first tree picking position is at [0,0] first tree itself is at [1,0]
+
+***current_direction*** - current movement direction, set to 'right' or 'left' depending on your tree grid setup
+
+***fruit_in_pockets*** - number of fruit in pockets, should get set back to 0 after selling
+
+***nook_load_time*** - amount of time to wait for load screen when entering and exiting Nook's
+
+***safety_space*** - #leave safety spaces for picking up random items like tree branches, acorns, weeds, etc.
+
+***bells_in_wallet*** - current amount of bells in wallet, defaults to 99000 to assume a full wallet
+
+***bells_space*** = total amount of bell bags that will be generated when tree picking is done
+
+
 # joycontrol
 Emulate Nintendo Switch Controllers over Bluetooth.
 

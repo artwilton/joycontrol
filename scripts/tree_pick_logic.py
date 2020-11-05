@@ -315,18 +315,3 @@ class TreePickLogic:
                 print("grid position after leaving Nook's")
                 print(self.current_grid_position)
                 await self.nook_shop_travel(controller_state, 'from')
-
-# TO-DO-LIST
-
-# when travelling to and from Nook's store it moves too fast and adds more space than expected. More noticable the further the travel is.
-
-# it seems to be having some trouble rendering so many trees after returning from Nook's store, maybe try and wait a little while when returning from Nook's store to let things load a bit
-
-# suggest building on top of cliff or adding fencing around grid to allow for only one space on each to correct for errors in movement and glitched caused by many trees being loaded on screen at once. Also suggest adding fence to help
-
-# pass user input to TreePickLogic() in run_controller_cli.py
-# do something like: here are the default values, would you like to change them? then ask for user input
-
-# currently it's just set up to sell every item in inventory to account for bells being added to inventory, maybe figure out a way to calculate how the inventory will be updated when selling fruit. Also would need to add a way to move inventory down instead of just to the right to select the fruit selling space.
-
-# Ask user if trees include native fruit, if so, default to selling every free inventory item.

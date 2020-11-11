@@ -1,4 +1,4 @@
-# ACNH Automator
+# ACNH Automator v1.0
 ## *Tom Nook will hate you because of this one weird trick!*
 
 ACNH Automator utilizes the [joycontrol](https://github.com/mart1nro/joycontrol) library to automate repetitive tasks in Animal Crossing New Horizons.
